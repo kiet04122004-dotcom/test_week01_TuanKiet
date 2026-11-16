@@ -23,8 +23,10 @@ def run_python(script: Path, *, timeout: float = 3.0) -> RunResult:
     environment = {
         key: value
         for key, value in os.environ.items()
-        if key in {"PATH", "SYSTEMROOT", "WINDIR", "TEMP", "TMP", "LANG", "LC_ALL"}
+        if key in {"PATH", "SYSTEMROOT", "WINDIR", "TEMP", "TMP", "LANG", "LC_ALL", "PYTHONUTF8"}
     }
+    environment["PYTHONUTF8"] = "1"
+    environment["PYTHONIOENCODING"] = "utf-8"
     environment["PYTHONNOUSERSITE"] = "1"
     environment["PYTHONDONTWRITEBYTECODE"] = "1"
     try:
