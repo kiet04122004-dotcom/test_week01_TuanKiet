@@ -10,6 +10,7 @@ Menu tương tác điều khiển bằng bàn phím:
 - Bấm 3: Chạy Bài 03 (ex03_input.py)
 - Bấm 4: Chạy Mini-project thẻ ASCII (starter_basic.py)
 - Bấm 5: Chạy AutoGrade tự chấm điểm (5/5 điểm)
+- Bấm 6: Chạy Dự án Name-List (Quản lý hồ sơ cá nhân)
 - Bấm 0: Thoát ứng dụng
 """
 
@@ -27,7 +28,6 @@ def chay_file(ten_file: str, mo_ta: str):
     
     # Kiểm tra xem file có tồn tại không
     if not duong_dan.exists():
-        # Thử tìm trong cấu trúc thư mục của khóa học
         duong_dan_khoa_hoc = BASE_DIR / "weeks" / "week-01-hello-python" / "exercises" / ten_file
         if duong_dan_khoa_hoc.exists():
             duong_dan = duong_dan_khoa_hoc
@@ -76,13 +76,14 @@ def hien_thi_menu():
     print("║  [3] Bài 03: Trò chuyện nhập liệu input() & Mad Libs     ║")
     print("║  [4] Mini-project: Thẻ danh thiếp ASCII tĩnh             ║")
     print("║  [5] 🎯 Chạy máy chấm điểm AutoGrade                     ║")
+    print("║  [6] 📇 Mở dự án Name-List (Quản lý hồ sơ cá nhân)       ║")
     print("║  [0] Thoát chương trình                                  ║")
     print("╚" + "═" * 58 + "╝")
 
 def main():
     while True:
         hien_thi_menu()
-        lua_chon = input("👉 Nhập số bạn muốn chọn (0-5) rồi nhấn Enter: ").strip()
+        lua_chon = input("👉 Nhập số bạn muốn chọn (0-6) rồi nhấn Enter: ").strip()
         
         if lua_chon == "1":
             chay_file("ex01_hello.py", "Bài 01 - Hello World & ASCII Art")
@@ -97,11 +98,13 @@ def main():
                 chay_file("weeks/week-01-hello-python/mini-project/starter_basic.py", "Mini-project - Thẻ ASCII")
         elif lua_chon == "5":
             chay_autograde()
+        elif lua_chon == "6":
+            chay_file("Name-List/name_list.py", "Dự án Name-List - Quản lý hồ sơ cá nhân")
         elif lua_chon == "0" or lua_chon.lower() == "q":
             print("\n👋 Cảm ơn Tuấn Kiệt đã sử dụng. Hẹn gặp lại trong Tuần 02!")
             break
         else:
-            print("\n⚠️ Lựa chọn không hợp lệ! Vui lòng chỉ bấm các phím từ 0 đến 5.")
+            print("\n⚠️ Lựa chọn không hợp lệ! Vui lòng chỉ bấm các phím từ 0 đến 6.")
             
         input("\n👉 Nhấn phím Enter để tiếp tục quay về menu...")
 
