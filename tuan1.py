@@ -2,15 +2,15 @@
 Ứng dụng điều hướng bài tập Tuần 01 🚀
 ======================================
 Dự án: test_week01_TuanKiet
-Tệp điều khiển: tuan1.py
+Vị trí file: tuan1.py
 
 Menu tương tác điều khiển bằng bàn phím:
-- Bấm 1: Chạy Bài 01 (ex01_hello.py)
-- Bấm 2: Chạy Bài 02 (ex02_calculator.py)
-- Bấm 3: Chạy Bài 03 (ex03_input.py)
-- Bấm 4: Chạy Mini-project thẻ ASCII (starter_basic.py)
-- Bấm 5: Chạy AutoGrade tự chấm điểm (5/5 điểm)
-- Bấm 6: Chạy Dự án Name-List (Quản lý hồ sơ cá nhân)
+- Bấm 1: Chạy Bài 01 (ex01_hello.py trong thư mục Exercises)
+- Bấm 2: Chạy Bài 02 (ex02_calculator.py trong thư mục Exercises)
+- Bấm 3: Chạy Bài 03 (ex03_input.py trong thư mục Exercises)
+- Bấm 4: Chạy Mini-project thẻ ASCII (mini_project_card.py trong Exercises)
+- Bấm 5: Chạy AutoGrade tự chấm điểm
+- Bấm 6: Chạy Dự án Name-List (Name-List/name_list.py)
 - Bấm 0: Thoát ứng dụng
 """
 
@@ -19,28 +19,38 @@ import subprocess
 import sys
 from pathlib import Path
 
-# Thư mục hiện tại chứa dự án
+# Thư mục hiện tại chứa script này
 BASE_DIR = Path(__file__).resolve().parent
+
+def tim_duong_dan_file(ten_file: str) -> Path | None:
+    """Tìm đường dẫn thực tế của file bài tập trong các thư mục khả dĩ."""
+    cac_vi_tri = [
+        BASE_DIR / "Exercises" / ten_file,
+        BASE_DIR / "Name-List" / ten_file,
+        BASE_DIR / ten_file,
+        BASE_DIR.parent / "Exercises" / ten_file,
+        BASE_DIR.parent / "Name-List" / ten_file,
+        BASE_DIR / "weeks" / "week-01-hello-python" / "exercises" / ten_file,
+        BASE_DIR.parent / "weeks" / "week-01-hello-python" / "exercises" / ten_file,
+    ]
+    for p in cac_vi_tri:
+        if p.exists():
+            return p
+    return None
 
 def chay_file(ten_file: str, mo_ta: str):
     """Hàm chạy một file Python cụ thể và in phân cách rõ ràng."""
-    duong_dan = BASE_DIR / ten_file
+    duong_dan = tim_duong_dan_file(ten_file)
     
-    # Kiểm tra xem file có tồn tại không
-    if not duong_dan.exists():
-        duong_dan_khoa_hoc = BASE_DIR / "weeks" / "week-01-hello-python" / "exercises" / ten_file
-        if duong_dan_khoa_hoc.exists():
-            duong_dan = duong_dan_khoa_hoc
-        else:
-            print(f"\n❌ Lỗi: Không tìm thấy file '{ten_file}' tại {duong_dan}")
-            return
+    if duong_dan is None:
+        print(f"\n❌ Lỗi: Không tìm thấy file '{ten_file}'!")
+        return
 
     print("\n" + "=" * 60)
     print(f"▶️ ĐANG CHẠY: {mo_ta}")
-    print(f"📁 Tệp: {duong_dan.name}")
+    print(f"📁 Tệp: {duong_dan.name} (tại: {duong_dan.parent.name}/{duong_dan.name})")
     print("=" * 60)
     
-    # Chạy script bằng chính trình thông dịch Python đang thực thi
     try:
         subprocess.run([sys.executable, str(duong_dan)], check=True)
     except subprocess.CalledProcessError as e:
@@ -56,10 +66,11 @@ def chay_autograde():
     print("\n" + "=" * 60)
     print("🎯 ĐANG CHẠY AUTOGRADE TỰ CHẤM ĐIỂM TUẦN 01...")
     print("=" * 60)
+    thu_muc_goc = BASE_DIR if (BASE_DIR / "assessment").exists() else BASE_DIR.parent
     try:
         subprocess.run(
             [sys.executable, "-m", "assessment", "grade", "--week", "01", "--acknowledge-local-code"],
-            cwd=str(BASE_DIR),
+            cwd=str(thu_muc_goc),
             check=False
         )
     except Exception as e:
@@ -92,14 +103,11 @@ def main():
         elif lua_chon == "3":
             chay_file("ex03_input.py", "Bài 03 - Tương tác input & Mad Libs")
         elif lua_chon == "4":
-            if (BASE_DIR / "mini_project_card.py").exists():
-                chay_file("mini_project_card.py", "Mini-project - Thẻ danh thiếp ASCII")
-            else:
-                chay_file("weeks/week-01-hello-python/mini-project/starter_basic.py", "Mini-project - Thẻ ASCII")
+            chay_file("mini_project_card.py", "Mini-project - Thẻ danh thiếp ASCII")
         elif lua_chon == "5":
             chay_autograde()
         elif lua_chon == "6":
-            chay_file("Name-List/name_list.py", "Dự án Name-List - Quản lý hồ sơ cá nhân")
+            chay_file("name_list.py", "Dự án Name-List - Quản lý hồ sơ cá nhân")
         elif lua_chon == "0" or lua_chon.lower() == "q":
             print("\n👋 Cảm ơn Tuấn Kiệt đã sử dụng. Hẹn gặp lại trong Tuần 02!")
             break
