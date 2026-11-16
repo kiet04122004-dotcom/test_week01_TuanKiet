@@ -2,11 +2,21 @@
     {
         "ho_ten": "Mai Tuấn Kiệt",
         "ngay_sinh": "04/12/2004",
-        "tuoi": 20,
+        "tuoi": 21,
         "cung_hoang_dao": "Nhân Mã ♐",
         "que_quan": "TP. Hồ Chí Minh",
         "so_thich": "Lập trình Python & Khám phá AI",
         "muc_tieu": "Trở thành lập trình viên xuất sắc",
         "thoi_gian_tao": "2026-11-16 19:42:56"
+    },
+    {
+        "ho_ten": "Nguyen Van A",
+        "ngay_sinh": "15/08/2000",
+        "tuoi": 26,
+        "cung_hoang_dao": "Sư Tử ♌",
+        "que_quan": "Da Nang",
+        "so_thich": "Choi game",
+        "muc_tieu": "Hoc gioi",
+        "thoi_gian_tao": "2026-11-16 20:08:28"
     }
 ]
